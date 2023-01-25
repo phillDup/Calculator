@@ -3,13 +3,9 @@ import tkinter
 from tkinter import *
 from tkinter import ttk
 
+window = tkinter.Tk()
+window.geometry('500x500')
 
-# Class OOP
-class GUI(tkinter.Tk):
-    def __int__(self):
-        super().__int__()
+frm = tkinter.Frame(window, width=100, height=100)
 
-
-# TK GUI
-root = GUI()
-root.mainloop()
+window.mainloop()
