@@ -8,6 +8,7 @@ import clsEquation
 # Main GUI OOP
 class AppGui(tk.Tk):
     def __init__(self):
+
         super().__init__()
 
         # Main Window
@@ -16,6 +17,7 @@ class AppGui(tk.Tk):
 
         # Equation Object
         self.equation = clsEquation.Equation()
+
 
     # Function automatically creates number buttons
     def create_num_buttons(self):
@@ -42,12 +44,13 @@ class AppGui(tk.Tk):
 
     # Function to add other widgets
     def create_widgets(self):
+
+        # Global objects
+        global btn_plus, btn_minus, btn_mult, edt_main
+
         # Insert --> Equation
         edt_main = tk.Entry(self, width=28, bd=3, font=('Arial', 24))
         edt_main.grid(column=0, row=0, columnspan=3, sticky=tk.N)
-
-        # Global buttons
-        global btn_plus, btn_minus, btn_mult
 
         btn_plus = tk.Button(self, width=8, bd=3, font=('Arial', 24), text=str('+'),
                              command=lambda: self.equation.add_num('+'))
@@ -59,11 +62,17 @@ class AppGui(tk.Tk):
                              command=lambda: self.equation.add_num('*'))
         btn_mult.grid(column=2, row=5)
 
-    def disable_button(self, *args):
+    @staticmethod
+    def return_main_edt():
+        return edt_main
+
+    @staticmethod
+    def disable_button(*args):
         for btn in args:
             btn["state"] = DISABLED
 
-    def enable_button(self, *args):
+    @staticmethod
+    def enable_button(*args):
         for btn in args:
             btn["state"] = NORMAL
 
