@@ -10,9 +10,29 @@ class GUI(ttk.Frame):
         super().__init__(container)
 
         # GUI elements here
+
+        # Styles
+        self.Style = ttk.Style(container)
+        self.Style.configure('TButton', font=('Arial', 18))
+        self.Style.configure('TEntry', font=('Arial', 20))
+
         # Main Input
-        self.main_edt = ttk.Entry(container, font=('Arial', 25), width=28)
-        self.main_edt.grid(column=0, row=0, sticky=tk.N)
+        self.main_edt = ttk.Entry(container, width=28, font=('Arial', 24))
+        self.main_edt.grid(column=0, row=0, sticky=tk.N, columnspan=3)
+
+        # Number buttons
+        row = 1
+        col = 1
+        self.buttons = []
+        for btn_num in range(0, 10):
+            new_button = ttk.Button(container, width=11, text=str(btn_num))
+            new_button.grid(row=row, column=col)
+            self.buttons.append(new_button)
+            if btn_num % 3 == 0:
+                row += 1
+                col = 0
+            else:
+                col += 1
 
 
 # Tkinter window
