@@ -60,7 +60,7 @@ class GUI(ttk.Frame):
         btn_div = ttk.Button(container, width=22, text='÷', command=lambda: self.equation.add_to_equation('/', self.main_edt))
         btn_div.grid(row=8, column=0, columnspan=3)
 
-        btn_equals = ttk.Button(container, width=22, text='=', command=lambda: self.equation.solve_equation())
+        btn_equals = ttk.Button(container, width=22, text='=', command=lambda: self.equation.solve_equation(self.main_edt))
         btn_equals.grid(row=9, column=0, columnspan=3)
 # Tkinter window
 class APP(tk.Tk):
