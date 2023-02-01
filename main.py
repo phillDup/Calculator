@@ -13,6 +13,8 @@ class GUI(ttk.Frame):
 
         # Objects
         self.equation = clsEquation.Equation()
+        self.container = container
+
 
         # GUI elements here
 
@@ -62,6 +64,15 @@ class GUI(ttk.Frame):
 
         btn_equals = ttk.Button(container, width=22, text='=', command=lambda: self.equation.solve_equation(self.main_edt))
         btn_equals.grid(row=9, column=0, columnspan=3)
+
+        btn_clear = ttk.Button(container, width=22, text='Clear', command=lambda : self.equation.clear_equation(self.main_edt))
+        btn_clear.grid(row=10, column=0, columnspan=3)
+
+    # Bindings
+    def bindings(self):
+        self.container.bind('1', lambda event: print('1'))
+
+
 # Tkinter window
 class APP(tk.Tk):
     def __init__(self):
@@ -75,4 +86,5 @@ class APP(tk.Tk):
 if __name__ == "__main__":
     App = APP()
     App_Gui = GUI(App)
+    App_Gui.bindings()
     App.mainloop()
