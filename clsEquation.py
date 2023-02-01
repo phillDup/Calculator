@@ -64,8 +64,8 @@ class Equation:
     def get_main_edt(self, edt: tkinter.Entry):
         self.main_edt = edt
 
-    def add_via_entry(self, key):
-        print(key)
-        self.add_to_equation(key)
+    def add_via_entry(self, char):
+        print()
+        self.add_to_equation(char.char)
 
 
