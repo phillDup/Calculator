@@ -80,6 +80,7 @@ class GUI(ttk.Frame):
         self.container.bind('*', self.equation.add_via_entry)
         self.container.bind('/', self.equation.add_via_entry)
         self.container.bind('=', self.equation.add_via_entry)
+        self.container.bind('<BackSpace>', self.equation.add_via_entry)
 
 
 # Tkinter window

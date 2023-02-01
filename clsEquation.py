@@ -61,11 +61,43 @@ class Equation:
         self.equation_copy = []
         self.main_edt.delete(0, len(self.main_edt.get()))
 
+    def remove_from_equation(self):
+        print(self.num_string)
+        print(self.equation)
+        # Remove from num_string if not yet added to array
+        if len(self.num_string) > 0:
+            print('>0')
+            self.num_string = self.num_string[:-1]
+
+        # get substring and remove if num
+        elif self.equation[len(self.equation) - 1][0] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
+            print('new sub')
+            temp_string = self.equation[len(self.equation) - 1]
+            temp_string = temp_string[:-1]
+            del self.equation[-1]
+            self.equation.append(temp_string)
+
+        # Only remove if operand
+        elif self.equation[len(self.equation) - 1] in ['+', '-', '/', '*']:
+            print('else')
+            del self.equation[-1]
+
+        # Remove from edit
+        self.main_edt.delete(len(self.main_edt.get()) - 1, len(self.main_edt.get()))
+        print(self.equation)
+
     def get_main_edt(self, edt: tkinter.Entry):
         self.main_edt = edt
 
     def add_via_entry(self, char):
-        print()
-        self.add_to_equation(char.char)
+        print(char)
+        # Check if equation should be solved
+        if char.char == '=':
+            self.solve_equation()
+        # Check for backspace
+        elif char.keycode == 8:
+            self.remove_from_equation()
+        else:
+            self.add_to_equation(char.char)
 
 
