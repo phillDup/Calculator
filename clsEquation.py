@@ -9,10 +9,11 @@ class Equation:
         self.equation = []
         # Local copy made for displaying
         self.equation_copy = []
+        self.main_edt = tkinter.Entry
         self.num_string = ''
         self.operands = {'+': '+', '-': '-', '*': 'x', '/': '÷'}
 
-    def add_to_equation(self, char, edt: tkinter.Entry):
+    def add_to_equation(self, char):
         self.equation_copy.append(char)
 
         if char in ['+', '-', '/', '*', '=']:
@@ -26,13 +27,13 @@ class Equation:
         # print(self.num_string)
 
         # add to edit
-        edt.delete(0, len(self.equation_copy))
+        self.main_edt.delete(0, len(self.equation_copy))
         for char in self.equation_copy:
             if char in ['+', '-', '/', '*']:
                 char = self.operands[char]
-            edt.insert(len(self.equation_copy) - 1, char)
+            self.main_edt.insert(len(self.equation_copy) - 1, char)
 
-    def solve_equation(self, edt: tkinter.Entry):
+    def solve_equation(self):
         # Ensure final letter is added to list
         self.equation.append(self.num_string)
         print(self.equation)
@@ -50,16 +51,21 @@ class Equation:
             elif char == '/':
                 answer = answer / float((self.equation[self.equation.index(char) + 1]))
 
-        edt.delete(0, len(edt.get()))
-        edt.insert(0, answer)
+        self.main_edt.delete(0, len(self.main_edt.get()))
+        self.main_edt.insert(0, answer)
         print(answer)
 
-    def clear_equation(self, edt: tkinter.Entry):
+    def clear_equation(self):
         self.equation = []
         self.num_string = ''
         self.equation_copy = []
-        edt.delete(0, len(edt.get()))
+        self.main_edt.delete(0, len(self.main_edt.get()))
 
-    def add_via_entry(self, event):
-        print(event)
+    def get_main_edt(self, edt: tkinter.Entry):
+        self.main_edt = edt
+
+    def add_via_entry(self, key):
+        print(key)
+        self.add_to_equation(key)
+
 
