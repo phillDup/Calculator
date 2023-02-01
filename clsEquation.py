@@ -62,29 +62,27 @@ class Equation:
         self.main_edt.delete(0, len(self.main_edt.get()))
 
     def remove_from_equation(self):
-        print(self.num_string)
-        print(self.equation)
-        # Remove from num_string if not yet added to array
+
         if len(self.num_string) > 0:
-            print('>0')
+            # Remove from string and equation copy (output)
             self.num_string = self.num_string[:-1]
+            self.equation_copy.pop(len(self.equation_copy) - 1)
 
-        # get substring and remove if num
-        elif self.equation[len(self.equation) - 1][0] in ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']:
-            print('new sub')
-            temp_string = self.equation[len(self.equation) - 1]
-            temp_string = temp_string[:-1]
-            del self.equation[-1]
-            self.equation.append(temp_string)
+        elif len(self.num_string) == 0:
+            # Get string from equation and remove (make current string)
+            self.num_string = self.equation[len(self.equation) - 1]
+            self.equation.pop(len(self.equation) - 1)
 
-        # Only remove if operand
-        elif self.equation[len(self.equation) - 1] in ['+', '-', '/', '*']:
-            print('else')
-            del self.equation[-1]
+            # Remove from string and equation copy (output)
+            self.num_string = self.num_string[:-1]
+            self.equation_copy.pop(len(self.equation_copy) - 1)
 
-        # Remove from edit
-        self.main_edt.delete(len(self.main_edt.get()) - 1, len(self.main_edt.get()))
-        print(self.equation)
+        # Add to edit
+        self.main_edt.delete(0, len(self.equation_copy) + 1)
+        for char in self.equation_copy:
+            if char in ['+', '-', '/', '*']:
+                char = self.operands[char]
+            self.main_edt.insert(len(self.equation_copy) - 1, char)
 
     def get_main_edt(self, edt: tkinter.Entry):
         self.main_edt = edt
