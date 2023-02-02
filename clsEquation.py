@@ -23,9 +23,6 @@ class Equation:
         else:
             self.num_string = self.num_string + str(char)
 
-        # print(self.equation)
-        # print(self.num_string)
-
         # add to edit
         self.main_edt.delete(0, len(self.equation_copy))
         for char in self.equation_copy:
@@ -38,8 +35,29 @@ class Equation:
         self.equation.append(self.num_string)
         print(self.equation)
 
+        # Order of operations
+        # Refactor equation to remove adding and subtracting
+        for char in self.equation:
+            # If mult or div: Calculate answer of operation and replace it in place
+            if char in ['*', '/']:
+                print('True')
+                if char == '*':
+                    temp_answer = int(self.equation[self.equation.index(char)-1]) * \
+                                  int(self.equation[self.equation.index(char) + 1])
+                if char == '/':
+                    temp_answer = float(self.equation[self.equation.index(char)-1]) *\
+                                  float(self.equation[self.equation.index(char)+1])
+
+                print(self.equation)
+                del self.equation[self.equation.index(char)-1]
+                del self.equation[self.equation.index(char)+1]
+                self.equation[self.equation.index(char)] = temp_answer
+
+        print(self.equation)
+        answer = 1
+
         # Calculate answer
-        answer = int(self.equation[0])
+        '''answer = int(self.equation[0])
         for char in self.equation:
             if char == '+':
                 answer = answer + int(self.equation[self.equation.index(char) + 1])
@@ -49,7 +67,7 @@ class Equation:
             elif char == '*':
                 answer = answer * int(self.equation[self.equation.index(char) + 1])
             elif char == '/':
-                answer = answer / float((self.equation[self.equation.index(char) + 1]))
+                answer = answer / float((self.equation[self.equation.index(char) + 1]))'''''
 
         self.main_edt.delete(0, len(self.main_edt.get()))
         self.main_edt.insert(0, answer)
@@ -62,6 +80,7 @@ class Equation:
         self.main_edt.delete(0, len(self.main_edt.get()))
 
     def remove_from_equation(self):
+        print('equation: ', self.equation, '\n', 'copy: ', self.equation_copy, '\n', 'num_string: ', self.num_string)
 
         if len(self.num_string) > 0:
             # Remove from string and equation copy (output)
@@ -70,6 +89,7 @@ class Equation:
 
         elif len(self.num_string) == 0:
             # Get string from equation and remove (make current string)
+            print(self.equation, len(self.equation))
             self.num_string = self.equation[len(self.equation) - 1]
             self.equation.pop(len(self.equation) - 1)
 
@@ -83,6 +103,8 @@ class Equation:
             if char in ['+', '-', '/', '*']:
                 char = self.operands[char]
             self.main_edt.insert(len(self.equation_copy) - 1, char)
+
+        print('equation: ', self.equation, '\n', 'copy: ', self.equation_copy, '\n', 'num_string: ', self.num_string)
 
     def get_main_edt(self, edt: tkinter.Entry):
         self.main_edt = edt

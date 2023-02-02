@@ -20,8 +20,9 @@ class GUI(ttk.Frame):
 
         # Styles
         self.Style = ttk.Style(container)
-        self.Style.configure('TButton', font=('Arial', 18))
-        self.Style.configure('TEntry', font=('Arial', 20))
+        self.Style.configure('TButton', font=('Arial', 18), foreground='black', background='silver')
+        self.Style.configure('TEntry', font=('Arial', 20), foreground='black')
+        self.options = {'padx': 0.1, 'pady': 1}
 
         # Main Input
         self.main_edt = ttk.Entry(container, width=28, font=('Arial', 24))
@@ -35,7 +36,7 @@ class GUI(ttk.Frame):
         col = 1
         for btn_num in range(0, 10):
             new_button = ttk.Button(self.container, width=11, text=str(btn_num))
-            new_button.grid(row=row, column=col)
+            new_button.grid(row=row, column=col, **self.options)
             self.buttons.append(new_button)
             if btn_num % 3 == 0:
                 row += 1
@@ -56,19 +57,23 @@ class GUI(ttk.Frame):
 
         # Operator buttons
         btn_plus = ttk.Button(self.container, width=22, text='+', command=lambda: self.equation.add_to_equation('+'))
-        btn_plus.grid(row=5, column=0, columnspan=3)
+        btn_plus.grid(row=5, column=0, columnspan=3, **self.options)
         btn_minus = ttk.Button(self.container, width=22, text='-', command=lambda: self.equation.add_to_equation('-'))
-        btn_minus.grid(row=6, column=0, columnspan=3)
+        btn_minus.grid(row=6, column=0, columnspan=3, **self.options)
         btn_mult = ttk.Button(self.container, width=22, text='x', command=lambda: self.equation.add_to_equation('*'))
-        btn_mult.grid(row=7, column=0, columnspan=3)
+        btn_mult.grid(row=7, column=0, columnspan=3, **self.options)
         btn_div = ttk.Button(self.container, width=22, text='÷', command=lambda: self.equation.add_to_equation('/'))
-        btn_div.grid(row=8, column=0, columnspan=3)
+        btn_div.grid(row=8, column=0, columnspan=3, **self.options)
 
         btn_equals = ttk.Button(self.container, width=22, text='=', command=lambda: self.equation.solve_equation())
-        btn_equals.grid(row=9, column=0, columnspan=3)
+        btn_equals.grid(row=9, column=0, columnspan=3, **self.options)
 
-        btn_clear = ttk.Button(self.container, width=22, text='Clear', command=lambda : self.equation.clear_equation())
-        btn_clear.grid(row=10, column=0, columnspan=3)
+        btn_clear = ttk.Button(self.container, width=22, text='Clear', command=lambda: self.equation.clear_equation())
+        btn_clear.grid(row=10, column=0, columnspan=3, **self.options)
+
+        btn_back = ttk.Button(self.container, width=22, text='Delete',
+                              command=lambda: self.equation.remove_from_equation())
+        btn_back.grid(row=11, column=0, columnspan=3, **self.options)
 
     # Bindings
     def bindings(self):
@@ -90,6 +95,7 @@ class APP(tk.Tk):
 
         self.title('Calculator')
         self.geometry("500x500")
+        self.configure(bg='ghost white')
 
 
 # Instances
