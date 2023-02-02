@@ -33,45 +33,40 @@ class Equation:
     def solve_equation(self):
         # Ensure final letter is added to list
         self.equation.append(self.num_string)
-        print(self.equation)
 
         # Order of operations
-        # Refactor equation to remove adding and subtracting
-        for char in self.equation:
-            # If mult or div: Calculate answer of operation and replace it in place
-            if char in ['*', '/']:
-                print('True')
-                if char == '*':
-                    temp_answer = int(self.equation[self.equation.index(char)-1]) * \
-                                  int(self.equation[self.equation.index(char) + 1])
-                if char == '/':
-                    temp_answer = float(self.equation[self.equation.index(char)-1]) *\
+        # Refactor equation to remove multiplying and division
+        while (self.equation.count('*') > 0) + (self.equation.count('/') > 0) != 0:
+            for char in self.equation:
+                # If mult or div: Calculate answer of operation and replace it in place
+                if char in ['*', '/']:
+
+                    if char == '*':
+                        temp_answer = float(self.equation[self.equation.index(char)-1]) * \
+                                  float(self.equation[self.equation.index(char) + 1])
+                    if char == '/':
+                        temp_answer = float(self.equation[self.equation.index(char)-1]) /\
                                   float(self.equation[self.equation.index(char)+1])
 
-                print(self.equation)
-                del self.equation[self.equation.index(char)-1]
-                del self.equation[self.equation.index(char)+1]
-                self.equation[self.equation.index(char)] = temp_answer
+                    print(self.equation)
+                    del self.equation[self.equation.index(char)-1]
+                    del self.equation[self.equation.index(char)+1]
+                    self.equation[self.equation.index(char)] = temp_answer
 
-        print(self.equation)
-        answer = 1
-
-        # Calculate answer
-        '''answer = int(self.equation[0])
+            print(self.equation)
+        answer = float(self.equation[0])
         for char in self.equation:
             if char == '+':
-                answer = answer + int(self.equation[self.equation.index(char) + 1])
-                print((self.equation[self.equation.index(char) + 1]))
+                answer = answer + float(self.equation[self.equation.index(char) + 1])
             elif char == '-':
-                answer = answer - int(self.equation[self.equation.index(char) + 1])
+                answer = answer - float(self.equation[self.equation.index(char) + 1])
             elif char == '*':
-                answer = answer * int(self.equation[self.equation.index(char) + 1])
+                answer = answer * float(self.equation[self.equation.index(char) + 1])
             elif char == '/':
-                answer = answer / float((self.equation[self.equation.index(char) + 1]))'''''
+                answer = answer / float((self.equation[self.equation.index(char) + 1]))
 
         self.main_edt.delete(0, len(self.main_edt.get()))
         self.main_edt.insert(0, answer)
-        print(answer)
 
     def clear_equation(self):
         self.equation = []
@@ -117,6 +112,8 @@ class Equation:
         # Check for backspace
         elif char.keycode == 8:
             self.remove_from_equation()
+        elif char.keycode == 67:
+            self.clear_equation()
         else:
             self.add_to_equation(char.char)
 
